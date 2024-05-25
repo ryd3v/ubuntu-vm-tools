@@ -86,6 +86,7 @@ echo "Polkit configuration file /etc/polkit-1/localauthority/50-local.d/45-allow
 # Reload the systemd daemon and start XRDP services
 systemctl daemon-reload
 systemctl start xrdp
+systemctl enable xrdp
 
 echo "Install is complete."
 echo "Reboot your machine to begin using XRDP."

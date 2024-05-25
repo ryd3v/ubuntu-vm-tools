@@ -40,3 +40,11 @@ This script automates the installation and configuration of XRDP with the GNOME 
 
 3. **Reboot Your Machine:**
    After the script completes, reboot your machine to begin using XRDP with the GNOME desktop environment.
+
+## Hyper-V
+
+After you’ve run the script, shut down your VM. On your host machine in an Administrator powershell prompt, execute this command:
+
+```powershell
+Set-VM -VMName <your_vm_name> -EnhancedSessionTransportType HvSocket
+```
