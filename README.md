@@ -1,4 +1,4 @@
-# XRDP Setup Script with GNOME Desktop for Ubuntu
+# XRDP Setup Script with GNOME Desktop for Ubuntu 24.04 LTS
 
 This script automates the installation and configuration of XRDP with the GNOME desktop environment on an Ubuntu system. It includes necessary checks for root privileges and ensures that the system is updated and upgraded before proceeding. The script also configures various settings to optimize XRDP performance and usability.
 
@@ -27,14 +27,16 @@ This script automates the installation and configuration of XRDP with the GNOME 
 ### Steps
 
 1. **Make the Script Executable:**
-    ```sh
-    chmod +x setup.sh
-    ```
 
-3. **Run the Script with Superuser Privileges:**
-    ```sh
-    sudo ./setup.sh
-    ```
+   ```sh
+   chmod +x setup.sh
+   ```
 
-4. **Reboot Your Machine:**
-    After the script completes, reboot your machine to begin using XRDP with the GNOME desktop environment.
+2. **Run the Script with Superuser Privileges:**
+
+   ```sh
+   sudo ./setup.sh
+   ```
+
+3. **Reboot Your Machine:**
+   After the script completes, reboot your machine to begin using XRDP with the GNOME desktop environment.
