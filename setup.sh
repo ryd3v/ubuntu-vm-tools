@@ -16,27 +16,20 @@ if [ -f /var/run/reboot-required ]; then
     exit 1
 fi
 
-# Install necessary tools
-apt install linux-tools-virtual -y
-apt install linux-cloud-tools-virtual -y
-
-# Install GNOME desktop environment
-apt install ubuntu-desktop -y
-
-# Install XRDP
-apt install xrdp -y
+# Install necessary tools and GNOME desktop environment in one command
+apt install -y linux-tools-virtual linux-cloud-tools-virtual ubuntu-desktop xrdp
 
 # Stop XRDP services before making changes
 systemctl stop xrdp
 systemctl stop xrdp-sesman
 
 # Modify XRDP configuration
-sed -i_orig -e 's/port=3389/port=vsock:\/\/-1:3389/g' /etc/xrdp/xrdp.ini
-sed -i_orig -e 's/security_layer=negotiate/security_layer=rdp/g' /etc/xrdp/xrdp.ini
-sed -i_orig -e 's/crypt_level=high/crypt_level=none/g' /etc/xrdp/xrdp.ini
+sed -i 's/port=3389/port=vsock:\/\/-1:3389/g' /etc/xrdp/xrdp.ini
+sed -i 's/security_layer=negotiate/security_layer=rdp/g' /etc/xrdp/xrdp.ini
+sed -i 's/crypt_level=high/crypt_level=none/g' /etc/xrdp/xrdp.ini
 
 # Append the content to /etc/xrdp/startubuntu.sh
-cat >> /etc/xrdp/startubuntu.sh << 'EOF'
+cat > /etc/xrdp/startubuntu.sh << 'EOF'
 #!/bin/sh
 export GNOME_SHELL_SESSION_MODE=ubuntu
 export XDG_CURRENT_DESKTOP=ubuntu:GNOME
@@ -48,11 +41,11 @@ chmod +x /etc/xrdp/startubuntu.sh
 echo "Script /etc/xrdp/startubuntu.sh has been created and made executable."
 
 # Modify sesman.ini to use startubuntu.sh
-sed -i_orig -e 's/startwm/startubuntu/g' /etc/xrdp/sesman.ini
-sed -i -e 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
+sed -i 's/startwm/startubuntu/g' /etc/xrdp/sesman.ini
+sed -i 's/FuseMountName=thinclient_drives/FuseMountName=shared-drives/g' /etc/xrdp/sesman.ini
 
 # Modify Xwrapper.config to allow anybody to start X
-sed -i_orig -e 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
+sed -i 's/allowed_users=console/allowed_users=anybody/g' /etc/X11/Xwrapper.config
 
 # Check if the blacklist file exists and create it if it doesn't
 if [ ! -e /etc/modprobe.d/blacklist-vmw_vsock_vmci_transport.conf ]; then
